@@ -1,0 +1,7 @@
+---
+### handlers file for starting modules
+- name: "start contact-merge"
+  shell: bash -x /ebs/apps/inblox/core/scripts/contact-merge.sh
+  async: 6000
+  poll: 0
+

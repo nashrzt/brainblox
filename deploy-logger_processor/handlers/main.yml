@@ -1,0 +1,11 @@
+---
+### handlers file for starting modules
+- name: "start processor"
+  shell: bash -x /ebs/apps/inblox/core/scripts/entity-processor-streaming.sh
+  async: 6000
+  poll: 0
+
+- name: "start logger"
+  shell: bash -x /ebs/apps/inblox/core/scripts/logger.sh
+  async: 6000
+  poll: 0

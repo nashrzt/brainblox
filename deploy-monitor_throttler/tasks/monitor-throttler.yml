@@ -1,0 +1,58 @@
+---
+
+#Deployment of Monitor & Throttler modules in BrainBlox
+
+- hosts: MONITOR_THROTTLER
+  remote_user: "{{ user }}"
+  become: true
+  become_method: sudo
+
+#  vars:
+#     ENV: "stg_new"
+#     CODEBASE_DIR: "/ebs/deployment/codebases/inblox/{{ ENV }}"
+#     APP_MODULES_BUNDLE: "{{ CODEBASE_DIR }}/appmodules/target/modules_bundle.tar"
+#     user: "nishan"
+#     group: "nishan"
+
+  tasks:
+
+    - name: kill the running Monitor module
+      action: shell pgrep -f monitor | xargs kill || true
+
+    - name: kill the running Throttler module
+      action: shell pgrep -f throttler | xargs kill || true
+
+    - name: Creating directory for Deployment
+      file: path=/ebs/apps/inblox/core state=directory owner={{ user }} group={{ group }} mode=0755
+
+    - name: create pkg directory if not present
+      file: path=/ebs/apps/pkgs state=directory owner={{ user }} group={{ group }} mode=0755
+
+    - name: create log directory if not present
+      file: path=/ebs/apps/inblox/brainbloxlogs state=directory owner={{ user }} group={{ group }} mode=0755
+
+    - name: delete the old codes and files
+      file: state=absent path=/ebs/apps/inblox/core
+
+    - name: recreate core directory
+      file: state=directory path=/ebs/apps/inblox/core
+
+    - name: delete the old logs
+      file: state=absent path=/ebs/apps/inblox/logs
+
+    - name: recreate log directory
+      file: state=directory path=/ebs/apps/inblox/logs
+
+    - name: copy the bundle file to the remote server
+      copy: src={{ APP_MODULES_BUNDLE }} dest=/ebs/apps/inblox/core/modules_bundle.tar
+
+    - name: unarchive tarball
+      unarchive: src=/ebs/apps/inblox/core/modules_bundle.tar
+                 dest=/ebs/apps/inblox/core
+                 copy=no
+
+    - name: remove tarball
+      file: state=absent path=/ebs/apps/inblox/core/modules_bundle.tar
+
+      notify: "start monitor"
+      notify: "start throttler"

@@ -1,0 +1,9 @@
+---
+- hosts: MONITOR_THROTTLER  
+  remote_user: ubuntu
+  become: true
+  become_method: sudo
+  roles:
+      - deploy-monitor_throttler
+ 
+

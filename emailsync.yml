@@ -1,0 +1,8 @@
+---
+- hosts: CONTACT_MERGE
+  remote_user: ubuntu
+  become: true
+  become_method: sudo
+  roles:
+      - deploy-contactmerge
+

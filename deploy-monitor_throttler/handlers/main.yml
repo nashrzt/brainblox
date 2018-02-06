@@ -1,0 +1,12 @@
+---
+### handlers file for starting modules
+- name: "start monitor"
+  shell: bash -x /ebs/apps/inblox/core/scripts/monitor.sh
+  async: 6000
+  poll: 0
+
+- name: "start throttler"
+  shell: bash -x /ebs/apps/inblox/core/scripts/throttler.sh
+  async: 6000
+  poll: 0
+

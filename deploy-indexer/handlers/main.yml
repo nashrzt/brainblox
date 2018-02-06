@@ -1,0 +1,7 @@
+---
+### handlers file for starting modules
+- name: "start indexer"
+  shell: bash -x /ebs/apps/inblox/core/scripts/elastic-search-indexer.sh
+  async: 6000
+  poll: 0
+

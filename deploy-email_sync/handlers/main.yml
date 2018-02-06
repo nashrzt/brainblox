@@ -1,0 +1,6 @@
+---
+### handlers file for starting modules
+- name: "start email-sync"
+  shell: bash -x /ebs/apps/inblox/core/scripts/email-sync.sh
+  async: 6000
+  poll: 0

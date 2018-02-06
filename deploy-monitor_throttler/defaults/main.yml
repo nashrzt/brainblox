@@ -1,0 +1,6 @@
+---
+ENV: "stg_local"
+CODEBASE_DIR: "/ebs/deployment/codebases/inblox/{{ ENV }}"
+APP_MODULES_BUNDLE: "{{ CODEBASE_DIR }}/appmodules/target/modules_bundle.tar"
+user: "ubuntu"
+group: "ubuntu"

@@ -1,0 +1,8 @@
+---
+- hosts: LOGGER_PROCESSOR 
+  remote_user: ubuntu
+  become: true
+  become_method: sudo
+  roles:
+      - deploy-logger_processor
+
